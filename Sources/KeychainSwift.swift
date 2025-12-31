@@ -8,12 +8,12 @@ A collection of helper functions for saving text and data in the keychain.
 */
 open class KeychainSwift {
   
-  var lastQueryParameters: [String: Any]? // Used by the unit tests
+    public var lastQueryParameters: [String: Any]? // Used by the unit tests
   
   /// Contains result code from the last operation. Value is noErr (0) for a successful result.
-  open var lastResultCode: OSStatus = noErr
+  open var lastResultCode: OSStatus = 0
 
-  var keyPrefix = "" // Can be useful in test.
+    public var keyPrefix = "" // Can be useful in test.
   
   /**
 
@@ -33,7 +33,7 @@ open class KeychainSwift {
   */
   open var synchronizable: Bool = false
 
-  private let lock = NSLock()
+  public let lock = NSLock()
 
   
   /// Instantiate a KeychainSwift object
@@ -273,7 +273,7 @@ open class KeychainSwift {
    
    */
   @discardableResult
-  func deleteNoLock(_ key: String) -> Bool {
+  public func deleteNoLock(_ key: String) -> Bool {
     let prefixedKey = keyWithPrefix(key)
     
     var query: [String: Any] = [
@@ -315,11 +315,11 @@ open class KeychainSwift {
   }
   
   /// Returns the key with currently set prefix.
-  func keyWithPrefix(_ key: String) -> String {
+    public func keyWithPrefix(_ key: String) -> String {
     return "\(keyPrefix)\(key)"
   }
   
-  func addAccessGroupWhenPresent(_ items: [String: Any]) -> [String: Any] {
+    public func addAccessGroupWhenPresent(_ items: [String: Any]) -> [String: Any] {
     guard let accessGroup = accessGroup else { return items }
     
     var result: [String: Any] = items
@@ -337,7 +337,7 @@ open class KeychainSwift {
    - returns: the dictionary with kSecAttrSynchronizable item added if it was requested. Otherwise, it returns the original dictionary.
  
   */
-  func addSynchronizableIfRequired(_ items: [String: Any], addingItems: Bool) -> [String: Any] {
+ public func addSynchronizableIfRequired(_ items: [String: Any], addingItems: Bool) -> [String: Any] {
     if !synchronizable { return items }
     var result: [String: Any] = items
     result[KeychainSwiftConstants.attrSynchronizable] = addingItems == true ? true : kSecAttrSynchronizableAny
