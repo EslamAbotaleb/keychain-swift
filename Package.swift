@@ -13,7 +13,10 @@ let package = Package(
           name: "KeychainSwift",
           dependencies: [],
           path: "Sources",
-          exclude: ["Info.plist"]
+          exclude: ["Info.plist"],
+          swiftSettings: [
+            .unsafeFlags(["-enable-library-evolution"])
+          ]
         ),
         .testTarget(
             name: "KeychainSwiftTests",
